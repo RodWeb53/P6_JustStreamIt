@@ -42,19 +42,11 @@ header {
 }
 
 .logo img {
-    max-height: 70px;
+    max-height: 100px;
     padding-left: 20px;
 }
 
-.modal-btn {
-  padding: 10px 14px;
-  font-size: 18px;
-  margin: 10px auto;
-  display: block;
-  min-width: 150px;
-  cursor: pointer;
-  background-color: rgba(63, 103, 237, 0.349);
-}
+/* Modale */
 
 .modal-container {
   visibility: hidden;
@@ -65,6 +57,7 @@ header {
   width: 100vw;
   height: 100vh;
   transition: visibility 0.4s;
+  z-index: 10;
 }
 .modal-container.active {
   visibility: visible;
@@ -100,25 +93,25 @@ header {
 }
 
 .modal-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 .modal-text {
-    grid-area: 1 / 1 / 2 / 4;
+  grid-area: 1 / 1 / 2 / 4;
 }
 
 .modal-pictures { 
-    grid-area: 1 / 4 / 2 / 6; 
+  grid-area: 1 / 4 / 2 / 6; 
 }
 
 .modal-pictures img {
-    float: right;
-    margin-right: 20px;   
-   }
+  float: right;
+  margin-right: 20px;   
+}
 
 .modal-container.active .modal {
   opacity: 1;
@@ -153,6 +146,16 @@ section {
   margin-top: 20px;
 }
 
+.modal-btn {
+  padding: 10px 14px;
+  font-size: 18px;
+  margin: 10px auto;
+  display: block;
+  min-width: 150px;
+  cursor: pointer;
+  background-color: rgba(63, 103, 237, 0.349);
+}
+
 
 .best-movie {
   display: grid;
@@ -179,4 +182,59 @@ section {
 .best-picture img {
   border-radius: 10px;
   box-shadow: rgba(14, 15, 18, 0.50) 5px 5px 10px 5px;
+}
+
+/* Carousel */
+
+.title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.slide-container {
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 40px auto;
+}
+
+.arrow {
+  width: 2rem;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+.container .thumbnail {
+  flex: 0 0 auto;
+  text-align: center;
+  flex-basis: 210px;
+  object-fit: cover;
+  cursor: pointer;
+  margin: 5px;
+  overflow: hidden;
+  transform: scale(.95);
+  transition: all .3s;
+}
+.thumbnail img {
+  border-radius: 20px;
+  box-shadow: rgba(14, 15, 18, 0.60) 0px 20px 30px -10px;
+}
+
+.container .thumbnail:hover {
+  transform: scale(1);
 }

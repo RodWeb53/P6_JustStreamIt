@@ -18,15 +18,97 @@ async function getBest() {
     const bestModalBtn = document.getElementsByClassName("modal-btn")[0];
     bestModalBtn.setAttribute("onclick", `openModal(${dataBest.id})`);
 
-}
+};
 
-//* Gestion des 7 meilleurs film
-async function getSevenBest(numberFilm, categorie){
+//* Gestion des 7 meilleurs film par catégorie
+async function getNumberFilm(numberFilm, categorie){
+    if (categorie == "best")
+        categorie = ""
     const response = await fetch(mainURL + "?sort_by=-imdb_score&page_size=" + numberFilm + "&genre=" + categorie)
-    const sevenBest = await response.json();
-    console.log("La liste des 7 meilleurs film du site");
-    console.log(sevenBest);
-}
+    if (!response.ok)
+        return
+    const numberFilms = await response.json();
+
+    return numberFilms
+};
+
+//* Création du carousel
+async function createCarrousel(numberFilm, categorie) {
+    const dataFilms = await getNumberFilm(numberFilm, categorie)
+
+    if (categorie == "best")
+        dataCarousel = dataFilms.results.splice(0, 1)
+    dataCarousel = dataFilms
+
+    const sectionCategorie = document.getElementById("categories");
+    
+    const wrapper = document.createElement('div');
+    wrapper.classList.add("slide-container");
+
+    const title = document.createElement('div');
+    title.classList.add("title");
+    
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.innerHTML = categorie
+
+    const buttonPrev = document.createElement('img');
+    buttonPrev.classList.add('arrow');
+    buttonPrev.setAttribute("id", categorie + '-slide-left');
+    buttonPrev.src = "./img/arrow-left.png";
+
+    const carouselConst = document.createElement('section');
+    carouselConst.classList.add("container");
+    carouselConst.setAttribute("id", categorie);
+    
+    
+    const buttonNext = document.createElement('img');
+    buttonNext.classList.add('arrow');
+    buttonNext.setAttribute("id", categorie + '-slide-right');
+    buttonNext.src = "./img/arrow-right.png";
+    
+    
+    
+
+    
+
+    for( i in dataCarousel.results){
+        const film = document.createElement('div');
+        const cover = document.createElement('img');
+
+        film.classList.add('thumbnail');
+        cover.src = dataCarousel.results[i].image_url;
+        cover.setAttribute("onclick", `openModal(${dataCarousel.results[i].id})`)
+
+        film.appendChild(cover);
+        carouselConst.appendChild(film);
+    }
+
+    sectionCategorie.appendChild(title);
+    title.appendChild(categoryTitle);
+    sectionCategorie.appendChild(wrapper);
+    // title.appendChild(wrapper)
+    wrapper.appendChild(buttonPrev);
+    wrapper.appendChild(carouselConst);
+    wrapper.appendChild(buttonNext);
+    
+
+
+
+
+
+    let slider = document.getElementById(categorie);
+
+    buttonPrev.addEventListener("click", movePrev);
+    buttonNext.addEventListener("click", moveNext);
+
+    function movePrev(){
+        slider.scrollLeft -= 220;
+    }
+    function moveNext(){
+        slider.scrollLeft += 220;
+    }
+
+};
 
 //* gestion de la modale
 const modalContainer = document.querySelector(".modal-container");
@@ -50,8 +132,7 @@ function closeModal(){
 async function openModalData(movieId) {
     const response = await fetch(mainURL + movieId);
     const data = await response.json();
-    console.log("resultat de la data");
-    console.log(data);
+
     document.getElementById("modal-picture").src = data.image_url;
     document.getElementById("modal-title").innerText = data.title;
     document.getElementById("modal-genre").innerText = "Genre : " + data.genres;
@@ -81,6 +162,11 @@ async function openModalData(movieId) {
 
 window.addEventListener('load', () => {
     getBest()
-    getSevenBest(7, "drama")
+    createCarrousel(8, "best")
+    createCarrousel(7, "Family")
+    createCarrousel(7, "Crime")
+    createCarrousel(7, "Biography")
+
+
 });
 

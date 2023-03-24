@@ -1,26 +1,22 @@
 const mainURL = "http://localhost:8000/api/v1/titles/"
 
-
-//* Gestion du meilleur film
+//--- Gestion du meilleur film ---\\
 async function getBest() {
     // Récupération des informations de l'API
     const response = await fetch(mainURL + "?sort_by=-imdb_score");
     const data = await response.json();
+    // Récupération du détail du meilleur film
     const best = await fetch(data["results"][0]["url"])
     const dataBest = await best.json()
-    console.log(data);
-    console.log(data["results"][0]["title"]);
-    console.log(dataBest);
     // Affichage des informations dans le HTML
     document.getElementById("best-title").innerText = dataBest.title;
     document.getElementById("best-picture").src = dataBest.image_url;
     document.getElementById("best-description").innerText = dataBest.description;
     const bestModalBtn = document.getElementsByClassName("modal-btn")[0];
     bestModalBtn.setAttribute("onclick", `openModal(${dataBest.id})`);
-
 };
 
-//* Gestion des 7 meilleurs film par catégorie
+//--- Gestion des 7 meilleurs film pour une catégorie ---\\
 async function getNumberFilm(numberFilm, categorie){
     if (categorie == "best")
         categorie = ""
@@ -28,18 +24,17 @@ async function getNumberFilm(numberFilm, categorie){
     if (!response.ok)
         return
     const numberFilms = await response.json();
-
     return numberFilms
 };
 
-//* Création du carousel
+//--- Création du carousel ---\\
 async function createCarrousel(numberFilm, categorie) {
     const dataFilms = await getNumberFilm(numberFilm, categorie)
-
+    // Fonctionnalité pour enlever le meilleur film de la liste best
     if (categorie == "best")
         dataCarousel = dataFilms.results.splice(0, 1)
     dataCarousel = dataFilms
-
+    // Construction des balises du HTML
     const sectionCategorie = document.getElementById("categories");
     
     const wrapper = document.createElement('div');
@@ -60,17 +55,12 @@ async function createCarrousel(numberFilm, categorie) {
     carouselConst.classList.add("container");
     carouselConst.setAttribute("id", categorie);
     
-    
     const buttonNext = document.createElement('img');
     buttonNext.classList.add('arrow');
     buttonNext.setAttribute("id", categorie + '-slide-right');
     buttonNext.src = "./img/arrow-right.png";
     
-    
-    
-
-    
-
+    // Boucle pour créer les 7 affiches de film dans le carousel
     for( i in dataCarousel.results){
         const film = document.createElement('div');
         const cover = document.createElement('img');
@@ -82,20 +72,15 @@ async function createCarrousel(numberFilm, categorie) {
         film.appendChild(cover);
         carouselConst.appendChild(film);
     }
-
+    // Construction du HTML
     sectionCategorie.appendChild(title);
     title.appendChild(categoryTitle);
     sectionCategorie.appendChild(wrapper);
-    // title.appendChild(wrapper)
     wrapper.appendChild(buttonPrev);
     wrapper.appendChild(carouselConst);
     wrapper.appendChild(buttonNext);
-    
 
-
-
-
-
+    // Gestion des boutons de défilement du carousel 
     let slider = document.getElementById(categorie);
 
     buttonPrev.addEventListener("click", movePrev);
@@ -110,7 +95,7 @@ async function createCarrousel(numberFilm, categorie) {
 
 };
 
-//* gestion de la modale
+//--- Gestion de la modale ---\\
 const modalContainer = document.querySelector(".modal-container");
 const modalTriggers = document.querySelectorAll(".modal-triggers");
 
@@ -128,7 +113,7 @@ async function openModal(movieId) {
 function closeModal(){
     modalContainer.classList.toggle("active");
 }
-// Information afficher dans la modale
+// Informations affichées dans la modale
 async function openModalData(movieId) {
     const response = await fetch(mainURL + movieId);
     const data = await response.json();
@@ -137,7 +122,6 @@ async function openModalData(movieId) {
     document.getElementById("modal-title").innerText = data.title;
     document.getElementById("modal-genre").innerText = "Genre : " + data.genres;
     document.getElementById("modal-date").innerText = "Date de sortie du film : " + data.date_published;
-    
     document.getElementById("modal-score").innerText = "Note JustStreamIt : " + data.imdb_score;
     document.getElementById("modal-description").innerText = "Description du film :\n " + data.long_description;
     document.getElementById("modal-director").innerText = "Réalisateur : " + data.directors;
@@ -159,14 +143,17 @@ async function openModalData(movieId) {
     document.getElementsByClassName("close-modal")[0].setAttribute("onclick" , closeModal)
 }  
 
+//--- Création d'une fonction async pour l'affichage du carousel dans l'ordre ---\\
+async function viewCarousel(){
+    await createCarrousel(8, "best"),
+    await createCarrousel(7, "Crime"),
+    await createCarrousel(7, "Biography"),
+    await createCarrousel(7, "Family")
+};
 
+//--- Chargement du JS dans le HTML ---\\
 window.addEventListener('load', () => {
-    getBest()
-    createCarrousel(8, "best")
-    createCarrousel(7, "Family")
-    createCarrousel(7, "Crime")
-    createCarrousel(7, "Biography")
-
-
+    getBest();
+    viewCarousel()
 });
 

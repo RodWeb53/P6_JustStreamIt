@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
     <title>Just Stream It</title>
 
     
@@ -27,17 +27,18 @@
     </header>
     <main>
         <section>
+            <!--Matrice de la fenetre Modal qui est cachée en CSS-->
             <div class="modal-container">
                 <div class="overlay modal-triggers"></div>
 
-                <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="dialogDesc">
+                <div class="modal" role="dialog" aria-label="modalTitle">
                     <button aria-label="close modal" class="close-modal modal-triggers">X</button>
                     <div class="modal-grid">
                         <div class="modal-text">
-                            <h2 id="modal-title">titre</h2>
-                            <p id="modal-date">date</p>
-                            <p id="modal-genre">genre</p>
-                            <p id="modal-description">description</p>
+                            <h2 id="modal-title">Texte issue du ichier js</h2>
+                            <p id="modal-date"></p>
+                            <p id="modal-genre"></p>
+                            <p id="modal-description"></p>
                             <p id="modal-rated"></p>
                             <p id="modal-score"></p>
                             <p id="modal-director"></p>
@@ -55,11 +56,11 @@
 
                 </div>
             </div>
-
+            <!--Fenêtre pour afficher le meilleur film-->
             <div class="best-movie">
                 <div class="best-text">
-                    <h2 id="best-title">texte depuis le fichier main.js</h2>
-                    <p id="best-description">texte depuis le fichier main.js</p>
+                    <h2 id="best-title">Texte issue du ichier js</h2>
+                    <p id="best-description"></p>
                     <button id="modal-best" class="modal-btn modal-trigger">Plus d'info</button>
                 </div>
                 <div class="best-picture">
@@ -68,7 +69,8 @@
             </div>
           
         </section>
-        <section id="categories"></section>
+        <!--Section pour insérer en JS les carousels-->
+        <div id="categories"></div>
 
         
     </main>

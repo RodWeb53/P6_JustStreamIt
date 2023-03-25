@@ -87,10 +87,10 @@ async function createCarrousel(numberFilm, categorie) {
     buttonNext.addEventListener("click", moveNext);
 
     function movePrev(){
-        slider.scrollLeft -= 220;
+        slider.scrollLeft -= 230;
     }
     function moveNext(){
-        slider.scrollLeft += 220;
+        slider.scrollLeft += 230;
     }
 
 };
@@ -120,40 +120,47 @@ async function openModalData(movieId) {
 
     document.getElementById("modal-picture").src = data.image_url;
     document.getElementById("modal-title").innerText = data.title;
-    document.getElementById("modal-genre").innerText = "Genre : " + data.genres;
-    document.getElementById("modal-date").innerText = "Date de sortie du film : " + data.date_published;
-    document.getElementById("modal-score").innerText = "Note JustStreamIt : " + data.imdb_score;
-    document.getElementById("modal-description").innerText = "Description du film :\n " + data.long_description;
-    document.getElementById("modal-director").innerText = "Réalisateur : " + data.directors;
-    document.getElementById("modal-actors").innerText = "Acteurs : " + data.actors;
-    document.getElementById("modal-duration").innerText = "Durée du film : " + data.duration + " Minutes";
-    document.getElementById("modal-country").innerText = "Pays d'origine : " + data.countries;
-    document.getElementById("modal-country").innerText = "Pays d'origine : " + data.countries;
+    document.getElementById("modal-genre").innerHTML = '<span>Genre : </span>' + data.genres;
+    document.getElementById("modal-date").innerHTML = '<span>Date de sortie du film : </span>' + data.date_published;
+    document.getElementById("modal-score").innerHTML = '<span>Note JustStreamIt : </span>' + data.imdb_score;
+    document.getElementById("modal-description").innerHTML = '<span>Description du film :\n </span>' + data.long_description;
+    document.getElementById("modal-director").innerHTML = '<span>Réalisateur : </span>' + data.directors;
+    document.getElementById("modal-actors").innerHTML = '<span>Acteurs : </span>' + data.actors;
+    document.getElementById("modal-duration").innerHTML = '<span>Durée du film : </span>' + data.duration + " Minutes";
+    document.getElementById("modal-country").innerHTML = "<span>Pays d'origine : </span>" + data.countries;
+
     
     if (data.rated = "Not rated or unkown rating")
-        document.getElementById("modal-rated").innerText = "Note : Pas de note pour le moment";
+        document.getElementById("modal-rated").innerHTML = '<span>Note : </span>' + "Pas de note pour le moment";
     else
-        document.getElementById("modal-rated").innerText = "Note : " + data.rated;
+        document.getElementById("modal-rated").innerHTML = '<span>Note : </span>' + data.rated;
     
     if (data.worldwide_gross_income == null)
-        document.getElementById("modal-box").innerText = "Résultat Box Office : Pas de résultat";
+        document.getElementById("modal-box").innerHTML = '<span>Résultat Box Office : </span>' + "Pas de résultat";
     else
-        document.getElementById("modal-box").innerText = "Résultat Box Office : " + data.worldwide_gross_income;
+        document.getElementById("modal-box").innerText = '<span>Résultat Box Office : </span>' + data.worldwide_gross_income;
 
     document.getElementsByClassName("close-modal")[0].setAttribute("onclick" , closeModal)
 }  
 
+//--- Fonction pour arrêter le loader ---\\
+function loader(){
+    document.querySelector('.loader-container').classList.add('hidden')
+}
+
 //--- Création d'une fonction async pour l'affichage du carousel dans l'ordre ---\\
 async function viewCarousel(){
+    await getBest();
     await createCarrousel(8, "best"),
     await createCarrousel(7, "Crime"),
     await createCarrousel(7, "Biography"),
-    await createCarrousel(7, "Family")
+    await createCarrousel(7, "Family"),
+    loader()
 };
 
 //--- Chargement du JS dans le HTML ---\\
 window.addEventListener('load', () => {
-    getBest();
+    
     viewCarousel()
 });
 

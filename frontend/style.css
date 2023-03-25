@@ -40,6 +40,11 @@ header {
     margin-left: 50px;
     margin-right: 50px;
 }
+.home li a {
+  text-decoration: none;
+  font-size: 2.5vh;
+  color: #2d160a;
+}
 
 .logo img {
     max-height: 100px;
@@ -47,7 +52,6 @@ header {
 }
 
 /* Modale */
-
 .modal-container {
   visibility: hidden;
   position: fixed;
@@ -82,8 +86,8 @@ header {
   max-width: 1000px;
   min-width: 300px;
   padding: 30px;
-  background: #fff;
-  border-radius: 5px;
+  background: #e8d1bc;
+  border-radius: 15px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -124,7 +128,7 @@ header {
   padding: 8px 10px;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 2.5vh;
   position: absolute;
   top: 10px;
   right: 10px;
@@ -132,11 +136,12 @@ header {
   background: #ff365e;
   color: #fff;
 }
-.modal h1 {
+.modal h2 {
   margin-bottom: 10px;
-  font-family: Montserrat, sans-serif;
-  font-weight: 500;
+  font-weight: bold;
+  height: 40px;
 }
+
 .modal p {
   line-height: 1.4;
   margin-bottom: 5px;
@@ -148,7 +153,7 @@ section {
 
 .modal-btn {
   padding: 10px 14px;
-  font-size: 18px;
+  font-size: 1.7vh;
   margin: 10px auto;
   display: block;
   min-width: 150px;
@@ -156,7 +161,13 @@ section {
   background-color: rgba(63, 103, 237, 0.349);
 }
 
+span {
+  color: #ff365e;
+  font-size: 1.7vh;
+  font-weight: bold;
+}
 
+/*Fenêtre du meilleur Film */
 .best-movie {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -173,8 +184,13 @@ section {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
-
 }
+.best-text h2 {
+  color: #fff;
+  font-size: 3.5vh;
+  text-shadow: #272626 3px 5px 2px;
+}
+
 .best-picture {
   text-align: center;
 }
@@ -185,11 +201,18 @@ section {
 }
 
 /* Carousel */
-
 .title {
   text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
+  margin-left: 10%;
+  width: 80%;
+}
+.title h2 {
+  background-color: #a66542;
+  font-size: 2.8vh;
+  border-radius: 50px;
+  box-shadow: rgba(14, 15, 18, 0.50) 5px 5px 10px 5px;
 }
 
 .slide-container {
@@ -214,10 +237,8 @@ section {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
-
 
 .container .thumbnail {
   flex: 0 0 auto;
@@ -237,4 +258,105 @@ section {
 
 .container .thumbnail:hover {
   transform: scale(1);
+}
+
+/*Loader */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(209, 209, 209, 0.5);
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.loader-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader {
+  width: 120px;
+  height: 120px;
+  border: 16px solid #e5e5e5;
+  border-top: 16px solid #007bff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: loader 2s linear infinite;
+}
+
+@keyframes loader{
+  100%{
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px){
+
+/* Header */
+  .logo img {
+    max-height: 8vh;
+    padding-left: 5px;
+}
+.home li a {
+  text-decoration: none;
+  font-size: 2vh;
+  color: #2d160a;
+}
+
+/*Fenêtre meilleur film */
+.best-movie {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  padding: 10px;
+}
+
+.modal-btn {
+  padding: 5px 5px;
+  margin: 5px auto;
+}
+
+/*Caroussel */
+
+.slide-container {
+  max-width: 600px;
+}
+
+.container .thumbnail {
+  margin-left: 40px;
+  flex-basis: 200px;
+}
+
+/*Modal */
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  overflow-y: scroll;
+  scrollbar-width: auto;
+  height: 90vh;
+}
+
+.modal-text {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.modal-pictures { 
+  grid-area: 2 / 1 / 3 / 2; 
+}
+
+.modal-pictures img {
+  float:none;
+  width: 50%;
+  margin: auto;   
+}
 }
